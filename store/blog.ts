@@ -4,10 +4,19 @@ import axios from 'axios'
 export const useBlog = defineStore({
     id: "blog",
     state: () => ({
+        allPosts: [],
         categories: [],
-        posts: []
+        postsByCat: []
     }),
     actions: {
+        async fetchAllPosts() {
+            try {
+                const response = await axios.get('http://localhost:8080/posts')
+                this.allPosts = response.data.results
+            } catch(error) {
+                console.log(error)
+            }
+        },
         async fetchCategories() {
             try {
                 const response = await axios.get('http://localhost:8080/categories')
@@ -19,8 +28,7 @@ export const useBlog = defineStore({
         async fetchPostsByCatId(id: number) {
             try {
                 const response = await axios.get('http://localhost:8080/posts/category/'+id)
-                this.posts = response.data.results
-                console.log('posts ', this.posts)
+                this.postsByCat = response.data.results
             } catch(error) {
                 console.log(error)
             }

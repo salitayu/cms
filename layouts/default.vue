@@ -7,11 +7,8 @@
     </div>
     <div>
       <div class="s-cms-container">
-          <a v-for="cat in cats" @click="blog.fetchPostsByCatId(cat.category_id)">{{cat.category_name}}</a>
+          <NuxtLink v-for="cat in cats" :key="cat.category_id" :href="`/posts/${cat.category_id}`">{{cat.category_name}}</NuxtLink>
       </div>
-      <main>
-          <slot/>
-      </main>
     </div>
     <main>
         <slot/>
