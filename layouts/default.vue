@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="s-navbar-container">
-        <NuxtLink to="/">Add Post</NuxtLink>
+        <NuxtLink to="/posts/add">Add Post</NuxtLink>
         <NuxtLink to="/">Add Category</NuxtLink>
         <NuxtLink to="/">Add Comment</NuxtLink>
     </div>

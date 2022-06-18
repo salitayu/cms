@@ -6,7 +6,8 @@ export const useBlog = defineStore({
     state: () => ({
         allPosts: [],
         categories: [],
-        postsByCat: []
+        postsByCat: [],
+        currentCategoryId: 1,
     }),
     actions: {
         async fetchAllPosts() {
@@ -32,6 +33,17 @@ export const useBlog = defineStore({
             } catch(error) {
                 console.log(error)
             }
+        },
+        async addPost(title:string, category_id:number, read_time:any, excerpt:string, message:string, datetime:any) {
+            console.log('addPost function from pinia store called')
+            try {
+                await axios.post('http://localhost:8080/post', {user_id: 2, category_id:category_id, title:title, read_time:Number(read_time), excerpt:excerpt, message:message, date_time:datetime})
+            } catch(error) {
+                console.log(error)
+            }
+        },
+        setCurrentCategoryId(category_id:number) {
+            this.currentCategoryId = category_id
         }
     },
 })
