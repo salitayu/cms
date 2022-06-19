@@ -4,7 +4,6 @@
         <h1>{{post.title}}</h1>
         <p>Author: Sally Tan</p>
         <p>Read Time: {{post.read_time}} minute read</p>
-        <p><i>{{post.excerpt}}</i></p>
         <p>{{post.message}}</p>
         </div>
     </div>
@@ -35,5 +34,5 @@
     const route = useRoute()
     const blog = useBlog()
     await blog.fetchPostsByCatId(route.params.id)
-    const {postsByCat} = blog
+    const { postsByCat } = blog
 </script>
