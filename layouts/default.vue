@@ -6,10 +6,11 @@
         <NuxtLink to="/comment/add">Add Comment</NuxtLink>
         <NuxtLink to="/register">Register</NuxtLink>
         <NuxtLink to="/login">Login</NuxtLink>
+        <a @click="logout">Logout</a>
     </div>
     <div>
       <div class="s-cms-container">
-          <NuxtLink v-for="cat in cats" :key="cat.category_id" :href="`/posts/${cat.category_id}`">{{cat.category_name}}</NuxtLink>
+          <NuxtLink v-for="cat in cats" :key="cat.category_id" :href="`/posts/${cat.slug}`">{{cat.category_name}}</NuxtLink>
       </div>
     </div>
     <main>
@@ -20,9 +21,14 @@
 
 <script setup async>
   import { useBlog } from '@/store/blog'
+  const router = useRouter()
   const blog = useBlog()
   await blog.fetchCategories()
   const cats = blog.categories
+  const logout = () => {
+    blog.logout()
+    router.push('/')
+  }
 </script>
 
 <style scoped>

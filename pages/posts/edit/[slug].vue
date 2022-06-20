@@ -1,11 +1,11 @@
 <template>
-    <div class="s-addpost-container">
-        <form @submit.prevent="createPost">
-            <h1>Add Post</h1>
+    <div class="s-editpost-container">
+        <form @submit.prevent="editPost">
+            <h1>Edit Post</h1>
             <label for="title">Title</label>
             <input type="title" id="title" v-model="title"/>
             <label for="category">Category</label>
-            <select v-model="categoryId" id="category" @change="onChangeCategoryId($event)">
+            <select v-model="currentPost.category_id" id="category">
                 <option
                     v-for="category in categories"
                     v-bind:key="category.category_name"
@@ -18,7 +18,7 @@
             <label for="message">Message</label>
             <textarea id="message" v-model="message"/>
             <br/>
-            <button type="submit" class="s-main-button">Create Post</button>
+            <button type="submit" class="s-main-button">Edit Post</button>
         </form>
     </div>
 </template>
@@ -46,23 +46,34 @@
     const blog = useBlog()
     const { categories } = blog
     const router = useRouter()
-    const createPost = async() => {
+    const route = useRoute()
+    const slug = route.params.slug
+
+    await blog.fetchPostBySlug(slug)
+
+    const { currentPost } = blog
+
+    let title = currentPost[0].title
+    const readtime = currentPost[0].read_time
+    const message = currentPost[0].message
+
+    const editPost = async() => {
+        const blog = useBlog()
+        const { currentPost } = blog
         const { currentCategoryId } = blog
-        const titlevalue = title.value
-        const readtimevalue = readtime.value
-        const slugvalue = slug.value
-        const messagevalue = message.value
         const time = new Date()
         const blogPost = {
             user_id: 2, 
-            title: titlevalue, 
+            title: document.getElementById('title').value, 
             category_id: currentCategoryId, 
-            slug: slugvalue, 
-            read_time: readtimevalue, 
-            message: messagevalue, 
+            slug: document.getElementById('slug').value, 
+            read_time: document.getElementById('readtime').value, 
+            message: document.getElementById('message').value, 
             datetime: time
         }
-        await blog.addPost(blogPost)
+        console.log('newtitle ', document.getElementById('title').value)
+        console.log('currentpost[0].id ', currentPost[0].post_id)
+        await blog.editPost(blogPost, currentPost[0].post_id)
         router.push("/")
     }
     const onChangeCategoryId = (event) => {

@@ -5,6 +5,8 @@
         <p>Author: Sally Tan</p>
         <p>Read Time: {{post.read_time}} minute read</p>
         <p>{{post.message}}</p>
+        <button class="s-main-button" @click="gotoEdit(post.slug)">Edit</button>
+        <button class="s-main-button" @click="gotoDelete">Delete</button>
         </div>
     </div>
 </template>
@@ -30,10 +32,13 @@
 </style>
 
 <script setup async>
+    const router = useRouter()
     import { useBlog } from '@/store/blog'
     import { storeToRefs } from 'pinia'
     const blog = useBlog();
     await blog.fetchAllPosts()
     const { allPosts } = storeToRefs(blog);
-    console.log('allPosts ', allPosts)
+    const gotoEdit = (slug) => {
+        router.push('/posts/edit/'+slug)
+    }
 </script>

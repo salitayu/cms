@@ -24,7 +24,7 @@
         console.log('username ', usernamevalue)
         console.log('password ', passwordvalue)
         await blog.loginUser(creds)
-        // router.push("/")
+        router.push("/")
     }
 </script>
 
@@ -39,11 +39,5 @@
     input {
         width: 200px;
         height: 25px;
-    }
-    .s-main-button {
-        border: 1px solid #333;
-        padding: 15px 45px 15px 45px;
-        background-color: #fff;
-        cursor: pointer;
     }
 </style>
