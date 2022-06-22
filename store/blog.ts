@@ -9,6 +9,7 @@ export const useBlog = defineStore({
         postsByCat: [],
         currentPost: [],
         currentCategoryId: 1,
+        newpost: []
     }),
     actions: {
         async registerUser(creds: any) {
@@ -114,4 +115,7 @@ export const useBlog = defineStore({
             this.currentCategoryId = category_id
         }
     },
+    persist: {
+      enabled: true
+    }
 })
