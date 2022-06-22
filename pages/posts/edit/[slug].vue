@@ -43,15 +43,16 @@
 
 <script setup async>
     import { useBlog } from '@/store/blog.ts'
+    
     const blog = useBlog()
-    const { categories } = blog
     const router = useRouter()
     const route = useRoute()
+
     const slug = route.params.slug
-
     await blog.fetchPostBySlug(slug)
-
+    
     const { currentPost } = blog
+    const { categories } = blog
 
     let title = currentPost[0].title
     const readtime = currentPost[0].read_time

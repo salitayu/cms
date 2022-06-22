@@ -1,9 +1,8 @@
 <template>
 <div>
     <div class="s-navbar-container">
+        <NuxtLink to="/">Home</NuxtLink>
         <NuxtLink to="/posts/add">Add Post</NuxtLink>
-        <NuxtLink to="/category/add">Add Category</NuxtLink>
-        <NuxtLink to="/comment/add">Add Comment</NuxtLink>
         <NuxtLink to="/register">Register</NuxtLink>
         <NuxtLink to="/login">Login</NuxtLink>
         <a @click="logout">Logout</a>

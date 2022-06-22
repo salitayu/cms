@@ -53,6 +53,7 @@ export const useBlog = defineStore({
         },
         async fetchPostBySlug(slug: string) {
             try {
+                console.log('calling fetchpostbyslug')
                 const response = await axios.get('http://localhost:8080/post/slug/'+slug, { withCredentials: true })
                 this.currentPost = response.data.results
                 console.log('currentPost ', this.currentPost)
@@ -89,6 +90,14 @@ export const useBlog = defineStore({
             console.log('editpost by slug called in pinia store')
             try {
                 await axios.put('http://localhost:8080/post/slug/'+slug, post, { withCredentials: true })
+            } catch(error) {
+                console.log(error)
+            }
+        },
+        async deletePost(id: any) {
+            console.log('deletepost by id called in pinia ', id)
+            try {
+                await axios.delete('http://localhost:8080/post/'+id, { withCredentials: true })
             } catch(error) {
                 console.log(error)
             }

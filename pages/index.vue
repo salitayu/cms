@@ -6,7 +6,7 @@
         <p>Read Time: {{post.read_time}} minute read</p>
         <p>{{post.message}}</p>
         <button class="s-main-button" @click="gotoEdit(post.slug)">Edit</button>
-        <button class="s-main-button" @click="gotoDelete">Delete</button>
+        <button class="s-main-button" @click="gotoDelete(post.post_id)">Delete</button>
         </div>
     </div>
 </template>
@@ -40,5 +40,10 @@
     const { allPosts } = storeToRefs(blog);
     const gotoEdit = (slug) => {
         router.push('/posts/edit/'+slug)
+    }
+    const gotoDelete = async (id) => {
+        console.log('deleting post with id ', id)
+        await blog.deletePost(id)
+        router.push('/')
     }
 </script>
