@@ -3,9 +3,9 @@
         <form @submit.prevent="createPost">
             <h1>Add Post</h1>
             <label for="title">Title</label>
-            <input type="title" id="title" v-model="title"/>
+            <input type="title" id="title" v-model="title" @change="onChangeTitle($event)"/>
             <label for="category">Category</label>
-            <select v-model="categoryId" id="category" @change="onChangeCategoryId($event)">
+            <select v-model="categoryId" id="category">
                 <option
                     v-for="category in categories"
                     v-bind:key="category.category_name"
@@ -43,11 +43,12 @@
 
 <script setup async>
     import { useBlog } from '@/store/blog.ts'
+    import { storeToRefs } from 'pinia'
     const blog = useBlog()
-    const { categories } = blog
+    const { categories, currentCategoryId, title, readtime, slug, message } = storeToRefs(blog)
     const router = useRouter()
     const createPost = async() => {
-        const { currentCategoryId } = blog
+        const { currentCategoryId, title, readtime, slug, message } = storeToRefs(blog)
         const titlevalue = title.value
         const readtimevalue = readtime.value
         const slugvalue = slug.value
@@ -56,16 +57,16 @@
         const blogPost = {
             user_id: 2, 
             title: titlevalue, 
-            category_id: currentCategoryId, 
+            category_id: 1, 
             slug: slugvalue, 
-            read_time: readtimevalue, 
+            read_time: Number(readtimevalue), 
             message: messagevalue, 
             datetime: time
         }
         await blog.addPost(blogPost)
         router.push("/")
     }
-    const onChangeCategoryId = (event) => {
-        console.log('onChangeCategoryId ', event.target.value)
+    const onChangeTitle = (event) => {
+        blog.setTitle(event.target.value)
     }
 </script>

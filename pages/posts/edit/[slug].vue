@@ -66,14 +66,12 @@
         const blogPost = {
             user_id: 2, 
             title: document.getElementById('title').value, 
-            category_id: currentCategoryId, 
+            category_id: Number(currentCategoryId), 
             slug: document.getElementById('slug').value, 
-            read_time: document.getElementById('readtime').value, 
+            read_time: Number(document.getElementById('readtime').value), 
             message: document.getElementById('message').value, 
             datetime: time
         }
-        console.log('newtitle ', document.getElementById('title').value)
-        console.log('currentpost[0].id ', currentPost[0].post_id)
         await blog.editPost(blogPost, currentPost[0].post_id)
         router.push("/")
     }

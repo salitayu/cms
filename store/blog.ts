@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+import { useStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -8,8 +10,13 @@ export const useBlog = defineStore({
         categories: [],
         postsByCat: [],
         currentPost: [],
-        currentCategoryId: 1,
-        newpost: []
+        currentCategoryId: ref(useStorage("currentCategoryId", 1)),
+        title: ref(useStorage("title", "")),
+        readtime: ref(useStorage("readtime", 1)),
+        slug: ref(useStorage("slug", "")),
+        message: ref(useStorage("message", "")),
+        userId: ref(useStorage("userId", 2)),
+        sessionToken: ref(useStorage("session_token", ""))
     }),
     actions: {
         async registerUser(creds: any) {
@@ -23,7 +30,7 @@ export const useBlog = defineStore({
             console.log('logging user')
             try {
                 const response = await axios.post('http://localhost:8080/login', creds, { withCredentials: true })
-                console.log('response ', response)
+                this.sessionToken = response.data.results
             } catch (error) {
                 console.log('error ', error)
             }
@@ -54,10 +61,8 @@ export const useBlog = defineStore({
         },
         async fetchPostBySlug(slug: string) {
             try {
-                console.log('calling fetchpostbyslug')
                 const response = await axios.get('http://localhost:8080/post/slug/'+slug, { withCredentials: true })
                 this.currentPost = response.data.results
-                console.log('currentPost ', this.currentPost)
             } catch (error) {
                 console.log(error)
             }
@@ -72,7 +77,7 @@ export const useBlog = defineStore({
             }
         },
         async addPost(post:any) {
-            console.log('addPost function from pinia store called')
+            console.log('addPost function from pinia store called ', post.category_id)
             try {
                 await axios.post('http://localhost:8080/post', post, { withCredentials: true })
             } catch (error) {
@@ -80,7 +85,7 @@ export const useBlog = defineStore({
             }
         },
         async editPost(post:any, id:any) {
-            console.log('editPost function from pinia store called')
+            console.log('editPost function from pinia store called ', post)
             try {
                 await axios.put('http://localhost:8080/post/'+id, post, { withCredentials: true })
             } catch (error) {
@@ -113,9 +118,9 @@ export const useBlog = defineStore({
         },
         setCurrentCategoryId(category_id:number) {
             this.currentCategoryId = category_id
-        }
+        },
+        setTitle (value: string) {
+            this.title = value
+        },
     },
-    persist: {
-      enabled: true
-    }
 })
