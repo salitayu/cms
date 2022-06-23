@@ -116,8 +116,9 @@ export const useBlog = defineStore({
                 console.log(error)
             }
         },
-        setCurrentCategoryId(category_id:number) {
-            this.currentCategoryId = category_id
+        setCurrentCategoryId(category:string) {
+            const newcategoryid = this.categories.find(x => x.category_name === category).category_id
+            this.currentCategoryId = newcategoryid
         },
         setTitle (value: string) {
             this.title = value

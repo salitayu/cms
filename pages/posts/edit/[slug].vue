@@ -5,7 +5,7 @@
             <label for="title">Title</label>
             <input type="title" id="title" v-model="title"/>
             <label for="category">Category</label>
-            <select v-model="currentPost.category_id" id="category">
+            <select v-model="currentPost.category_id" id="category" @change="changeCategory($event)">
                 <option
                     v-for="category in categories"
                     v-bind:key="category.category_name"
@@ -75,7 +75,10 @@
         await blog.editPost(blogPost, currentPost[0].post_id)
         router.push("/")
     }
-    const onChangeCategoryId = (event) => {
-        console.log('onChangeCategoryId ', event.target.value)
+    const changeCategory = (event) => {
+        console.log('changingCategoryId with ', event.target.value)
+        blog.setCurrentCategoryId(event.target.value)
+        console.log('newcategoryid ', blog.currentCategoryId)
+        currentPost[0].category_id = blog.currentCategoryId
     }
 </script>

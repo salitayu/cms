@@ -3,7 +3,7 @@
         <form @submit.prevent="createPost">
             <h1>Add Post</h1>
             <label for="title">Title</label>
-            <input type="title" id="title" v-model="title" @change="onChangeTitle($event)"/>
+            <input type="title" id="title" v-model="title"/>
             <label for="category">Category</label>
             <select v-model="categoryId" id="category">
                 <option
@@ -68,5 +68,10 @@
     }
     const onChangeTitle = (event) => {
         blog.setTitle(event.target.value)
+    }
+    const changeCategory = (event) => {
+        console.log('changingCategoryId with ', event.target.value)
+        blog.setCurrentCategoryId(event.target.value)
+        console.log('newcategoryid ', blog.currentCategoryId)
     }
 </script>
