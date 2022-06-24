@@ -5,7 +5,7 @@
             <label for="title">Title</label>
             <input type="title" id="title" v-model="title"/>
             <label for="category">Category</label>
-            <select v-model="categoryId" id="category">
+            <select id="category">
                 <option
                     v-for="category in categories"
                     v-bind:key="category.category_name"

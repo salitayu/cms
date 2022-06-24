@@ -5,11 +5,11 @@
             <label for="title">Title</label>
             <input type="title" id="title" v-model="title"/>
             <label for="category">Category</label>
-            <select v-model="currentPost.category_id" id="category" @change="changeCategory($event)">
+            <select v-model="currentPost[0].category_id" id="category" @change="changeCategory($event)">
                 <option
                     v-for="category in categories"
                     v-bind:key="category.category_name"
-                    v-bind:value="category.id">{{ category.category_name }}</option>
+                    v-bind:value="category.category_id">{{ category.category_name }}</option>
             </select>
             <label for="readtime">Read Time</label>
             <input type="number" id="readtime" v-model="readtime"/>
@@ -66,7 +66,7 @@
         const blogPost = {
             user_id: 2, 
             title: document.getElementById('title').value, 
-            category_id: Number(currentCategoryId), 
+            category_id: Number(currentPost[0].category_id), 
             slug: document.getElementById('slug').value, 
             read_time: Number(document.getElementById('readtime').value), 
             message: document.getElementById('message').value, 
