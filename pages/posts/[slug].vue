@@ -31,6 +31,7 @@
         padding: 15px 45px 15px 45px;
         background-color: #fff;
         cursor: pointer;
+        margin-right: 10px;
     }
     h1 {
         margin-top: 5px;
